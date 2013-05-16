@@ -62,6 +62,9 @@
                <documentation>
                   A class name. The class should implement Role interface and should have a default (public, no-param) constructor.
                </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.mind_era.knime.roles.Role"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -110,7 +113,6 @@
       <documentation>
          Copyright © 2013 Mind Eratosthenes Kft.
 Licence: http://www.apache.org/licenses/LICENSE-2.0
-
       </documentation>
    </annotation>
 

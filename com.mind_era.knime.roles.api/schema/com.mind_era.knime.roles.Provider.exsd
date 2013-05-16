@@ -23,10 +23,12 @@
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <choice>
+            <sequence>
                <element ref="NodeFactoryReference"/>
-               <element ref="RoleReference"/>
-            </choice>
+               <sequence minOccurs="1" maxOccurs="unbounded">
+                  <element ref="RoleReference"/>
+               </sequence>
+            </sequence>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -67,6 +69,9 @@
                <documentation>
                   The value of Role&apos;s reference method.
                </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":com.mind_era.knime.roles.Role"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -142,8 +147,6 @@
       <documentation>
          Copyright © 2013 Mind Eratosthenes Kft.
 Licence: http://www.apache.org/licenses/LICENSE-2.0
-
-
       </documentation>
    </annotation>
 

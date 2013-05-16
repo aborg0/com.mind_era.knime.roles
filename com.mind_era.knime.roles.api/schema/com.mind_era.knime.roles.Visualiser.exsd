@@ -23,10 +23,12 @@
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <choice>
+            <sequence>
                <element ref="NodeFactoryReference"/>
-               <element ref="RoleReference"/>
-            </choice>
+               <sequence minOccurs="1" maxOccurs="unbounded">
+                  <element ref="RoleReference"/>
+               </sequence>
+            </sequence>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
