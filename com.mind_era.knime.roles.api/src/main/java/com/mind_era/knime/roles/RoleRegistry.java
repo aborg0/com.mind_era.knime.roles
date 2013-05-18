@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.knime.core.node.NodeLogger;
 
 /**
  * The role registry class will be offered as a service to perform various role
@@ -28,6 +29,9 @@ import org.eclipse.core.runtime.Platform;
  * @author Gabor Bakos
  */
 public class RoleRegistry {
+	private static final NodeLogger logger = NodeLogger
+			.getLogger(RoleRegistry.class);
+
 	private final Collection<Role> roles;
 	private final Map<String, Role> representations;
 	private final Map<String, Collection<Role>> alternativeNames;
@@ -55,13 +59,12 @@ public class RoleRegistry {
 						.createExecutableExtension("class");
 				final String rep = role.representation();
 				if (representations.containsKey(rep)) {
-					throw new IllegalStateException(
-							"Multiple roles registered with same representations: "
-									+ representations.get(rep) + " and " + role);
+					logger.warn("Multiple roles registered with same representations: "
+							+ representations.get(rep) + " and " + role);
 				}
 				registered.add(role);
 			} catch (final CoreException e) {
-				throw new IllegalStateException(e);
+				logger.coding("", e);
 			}
 		}
 		for (final Role role : registered) {
@@ -88,6 +91,7 @@ public class RoleRegistry {
 				.getConfigurationElementsFor("com.mind_era.knime.roles.Visualiser");
 		this.visualiserIds = Collections
 				.unmodifiableMap(parseConfigElements(visualizerConfigurationElements));
+		logger.info("Registered Roles: " + roles);
 	}
 
 	/**
@@ -202,5 +206,16 @@ public class RoleRegistry {
 			return Collections.emptyList();
 		}
 		return Collections.unmodifiableCollection(map.get(key));
+	}
+
+	/**
+	 * @return
+	 */
+	public Collection<? extends String> roleRepresentations() {
+		final List<String> ret = new ArrayList<>(roles.size());
+		for (final Role role : roles()) {
+			ret.add(role.representation());
+		}
+		return Collections.unmodifiableList(ret);
 	}
 }

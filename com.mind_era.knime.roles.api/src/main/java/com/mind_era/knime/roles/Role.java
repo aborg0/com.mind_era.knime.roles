@@ -43,7 +43,7 @@ public interface Role {
 	public String description();
 
 	/**
-	 * @return THe default name when a new column should be created, or a column
+	 * @return The default name when a new column should be created, or a column
 	 *         could be selected.
 	 */
 	public String defaultName();
