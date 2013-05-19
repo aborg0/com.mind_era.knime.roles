@@ -10,7 +10,7 @@ Usually some columns have the same function within a table and that seldom chang
 The roles can be used for auto-configuration of parameters, finding applicable nodes ...
 
 ## Structure
-Currently only the [API project](com.mind_era.knime.roles.api) is available.
+Currently only the [API project](com.mind_era.knime.roles.api) is available, although started a project for the [nodes](com.mind_era.knime.roles.nodes).
 
 ## Legal stuff
 The API is published under the Apache 2.0 licence: http://www.apache.org/licenses/LICENSE-2.0
