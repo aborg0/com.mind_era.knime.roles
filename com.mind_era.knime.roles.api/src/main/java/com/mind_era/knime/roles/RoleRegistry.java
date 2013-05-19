@@ -46,21 +46,21 @@ public class RoleRegistry {
 				.getExtensionRegistry();
 		final IConfigurationElement[] registerConfigurationElements = extensionRegistry
 				.getConfigurationElementsFor("com.mind_era.knime.roles.Register");
-		final List<Role> registered = new ArrayList<Role>();
-		final Map<String, Role> representations = new TreeMap<>();
-		final Map<String, Collection<Role>> alternativeNames = new TreeMap<>();
+		final List<Role> registered = new ArrayList<>();
+		final Map<String, Role> representations_ = new TreeMap<>();
+		final Map<String, Collection<Role>> alternativeNames_ = new TreeMap<>();
 		for (final Role role : PredefinedRoles.values()) {
 			registered.add(role);
-			representations.put(role.representation(), role);
+			representations_.put(role.representation(), role);
 		}
 		for (final IConfigurationElement registerElement : registerConfigurationElements) {
 			try {
 				final Role role = (Role) registerElement
 						.createExecutableExtension("class");
 				final String rep = role.representation();
-				if (representations.containsKey(rep)) {
+				if (representations_.containsKey(rep)) {
 					logger.warn("Multiple roles registered with same representations: "
-							+ representations.get(rep) + " and " + role);
+							+ representations_.get(rep) + " and " + role);
 				}
 				registered.add(role);
 			} catch (final CoreException e) {
@@ -69,16 +69,16 @@ public class RoleRegistry {
 		}
 		for (final Role role : registered) {
 			for (final String name : role.alternativeNames()) {
-				if (!alternativeNames.containsKey(name)) {
-					alternativeNames.put(name, new ArrayList<Role>());
+				if (!alternativeNames_.containsKey(name)) {
+					alternativeNames_.put(name, new ArrayList<Role>());
 				}
-				alternativeNames.get(name).add(role);
+				alternativeNames_.get(name).add(role);
 			}
 			roleClassNameToRoles.put(role.getClass().getName(), role);
 		}
 		roles = Collections.unmodifiableList(registered);
-		this.representations = Collections.unmodifiableMap(representations);
-		this.alternativeNames = Collections.unmodifiableMap(alternativeNames);
+		this.representations = Collections.unmodifiableMap(representations_);
+		this.alternativeNames = Collections.unmodifiableMap(alternativeNames_);
 		final IConfigurationElement[] providerConfigurationElements = extensionRegistry
 				.getConfigurationElementsFor("com.mind_era.knime.roles.Provider");
 		this.providerIds = Collections
@@ -197,8 +197,17 @@ public class RoleRegistry {
 	}
 
 	/**
-	 * @param role
-	 * @return
+	 * @param <K>
+	 *            Key type of {@code map}.
+	 * @param <V>
+	 *            Value type of {@code map}.
+	 * @param key
+	 *            A key compatible with {@code map}.
+	 * @param map
+	 *            A multimap.
+	 * @return An empty {@link Collection} if the {@code key} is not contained,
+	 *         else the unmodifiable projection of the value for the {@code key}
+	 *         .
 	 */
 	private static <K, V> Collection<V> safeGet(final K key,
 			final Map<K, ? extends Collection<V>> map) {
@@ -209,7 +218,8 @@ public class RoleRegistry {
 	}
 
 	/**
-	 * @return
+	 * @return The {@link #roles()} as their {@link String}
+	 *         {@link Role#representation()}.
 	 */
 	public Collection<? extends String> roleRepresentations() {
 		final List<String> ret = new ArrayList<>(roles.size());

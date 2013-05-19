@@ -1,5 +1,5 @@
-/**
- * 
+/* Copyright © 2013 Mind Eratosthenes Kft.
+ * Licence: http://www.apache.org/licenses/LICENSE-2.0
  */
 package com.mind_era.knime.roles;
 
@@ -26,13 +26,23 @@ public class RoleHandler {
 	private final RoleRegistry registry;
 
 	/**
+	 * Creates {@link RoleHandler}.
 	 * 
+	 * @param registry
+	 *            A {@link RoleRegistry}.
 	 */
 	public RoleHandler(final RoleRegistry registry) {
 		super();
 		this.registry = registry;
 	}
 
+	/**
+	 * Collects the {@link Role}s for each column.
+	 * 
+	 * @param spec
+	 *            A {@link DataTableSpec}.
+	 * @return A {@link Map} from column names to {@link Role}s.
+	 */
 	public Map<String, Collection<? extends Role>> roles(
 			final DataTableSpec spec) {
 		final Map<String, Collection<? extends Role>> ret = new TreeMap<>();
@@ -48,12 +58,20 @@ public class RoleHandler {
 
 	/**
 	 * @param property
-	 * @return
+	 *            A property text.
+	 * @return {@link Role}s parsed from {@code property}.
 	 */
 	private List<? extends Role> rolesOfProperty(final String property) {
 		return map(property.split(";"));
 	}
 
+	/**
+	 * @param spec
+	 *            A {@link DataColumnSpec}.
+	 * @return The {@link Role}s parsed from {@code spec}'s
+	 *         {@link Role#PROPERTY_KEY} {@link DataColumnSpec#getProperties()
+	 *         property}.
+	 */
 	private List<? extends Role> rolesOfSpec(final DataColumnSpec spec) {
 		final String property = spec.getProperties().getProperty(
 				Role.PROPERTY_KEY);
@@ -65,7 +83,10 @@ public class RoleHandler {
 
 	/**
 	 * @param list
-	 * @return
+	 *            Some {@link String}s {@link Role#representation()
+	 *            representing} {@link Role}s.
+	 * @return A {@link List} of {@link Role}s.
+	 * @see RoleRegistry#role(String)
 	 */
 	private List<? extends Role> map(final String... list) {
 		final List<Role> ret = new ArrayList<Role>(list.length);
@@ -75,6 +96,15 @@ public class RoleHandler {
 		return Collections.unmodifiableList(ret);
 	}
 
+	/**
+	 * Adds some roles to a column.
+	 * 
+	 * @param spec
+	 *            A {@link DataColumnSpec}.
+	 * @param roles
+	 *            The {@link Role}s to add.
+	 * @return A new {@link DataColumnSpec} with the additional {@code roles}.
+	 */
 	public DataColumnSpec addRoles(final DataColumnSpec spec,
 			final Role... roles) {
 		final DataColumnSpecCreator creator = new DataColumnSpecCreator(spec);
@@ -94,13 +124,26 @@ public class RoleHandler {
 		return creator.createSpec();
 	}
 
+	/**
+	 * Computes the "serialized" version of {@code roles} to be saved in
+	 * {@link DataColumnSpec#getProperties() properties}.
+	 * 
+	 * @param roles
+	 *            Some {@link Role}s.
+	 * @return {@link String} version of {@code roles}.
+	 * @see #rolesToString(Iterable)
+	 */
 	public String rolesToString(final Role... roles) {
 		return rolesToString(Arrays.asList(roles));
 	}
 
 	/**
+	 * Computes the "serialized" version of {@code roles} to be saved in
+	 * {@link DataColumnSpec#getProperties() properties}.
+	 * 
 	 * @param roles
-	 * @return
+	 *            Some {@link Role}s.
+	 * @return {@link String} version of {@code roles}.
 	 */
 	public String rolesToString(final Iterable<Role> roles) {
 		final StringBuilder ret = new StringBuilder();

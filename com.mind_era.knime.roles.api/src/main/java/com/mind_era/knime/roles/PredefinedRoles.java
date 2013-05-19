@@ -17,12 +17,13 @@ import org.knime.core.node.NodeModel;
 import org.knime.core.node.port.PortObjectSpec;
 
 /**
- * The predefined {@link Role}s: {@value #label}, {@value #prediction}, {@value #cluster}.
+ * The predefined {@link Role}s: {@value #label}, {@value #prediction},
+ * {@value #cluster}.
  * 
  * @author Gabor Bakos
  */
 public enum PredefinedRoles implements Role {
-	///The training data label/class role
+	/** The training data label/class role */
 	label("class") {
 		@Override
 		public Icon icon() {
@@ -70,12 +71,12 @@ public enum PredefinedRoles implements Role {
 		}
 
 		@Override
-		public boolean shouldBeNominal(DataType type) {
+		public boolean shouldBeNominal(final DataType type) {
 			return false;
 		}
 
 		@Override
-		public boolean isNominalPreferred(DataType type) {
+		public boolean isNominalPreferred(final DataType type) {
 			return StringCell.TYPE.isASuperTypeOf(type);
 		}
 
@@ -90,14 +91,15 @@ public enum PredefinedRoles implements Role {
 		}
 
 		@Override
-		public void configurationChecks(NodeModel model,
-				PortObjectSpec[] tableSpecs, DataColumnSpec... columnSpecs)
+		public void configurationChecks(final NodeModel model,
+				final PortObjectSpec[] tableSpecs,
+				final DataColumnSpec... columnSpecs)
 				throws InvalidSettingsException {
 			// Do nothing
 		}
-		
+
 	},
-	/// predicted class labels
+	/** predicted class labels */
 	prediction {
 		@Override
 		public Icon icon() {
@@ -145,12 +147,12 @@ public enum PredefinedRoles implements Role {
 		}
 
 		@Override
-		public boolean shouldBeNominal(DataType type) {
+		public boolean shouldBeNominal(final DataType type) {
 			return false;
 		}
 
 		@Override
-		public boolean isNominalPreferred(DataType type) {
+		public boolean isNominalPreferred(final DataType type) {
 			return StringCell.TYPE.isASuperTypeOf(type);
 		}
 
@@ -165,14 +167,15 @@ public enum PredefinedRoles implements Role {
 		}
 
 		@Override
-		public void configurationChecks(NodeModel model,
-				PortObjectSpec[] tableSpecs, DataColumnSpec... columnSpecs)
+		public void configurationChecks(final NodeModel model,
+				final PortObjectSpec[] tableSpecs,
+				final DataColumnSpec... columnSpecs)
 				throws InvalidSettingsException {
 			// Do nothing
 		}
-		
+
 	},
-	/// cluster identifiers
+	/** cluster identifiers */
 	cluster {
 		@Override
 		public Icon icon() {
@@ -220,12 +223,12 @@ public enum PredefinedRoles implements Role {
 		}
 
 		@Override
-		public boolean shouldBeNominal(DataType type) {
+		public boolean shouldBeNominal(final DataType type) {
 			return false;
 		}
 
 		@Override
-		public boolean isNominalPreferred(DataType type) {
+		public boolean isNominalPreferred(final DataType type) {
 			return StringCell.TYPE.isASuperTypeOf(type);
 		}
 
@@ -240,25 +243,28 @@ public enum PredefinedRoles implements Role {
 		}
 
 		@Override
-		public void configurationChecks(NodeModel model,
-				PortObjectSpec[] tableSpecs, DataColumnSpec... columnSpecs)
+		public void configurationChecks(final NodeModel model,
+				final PortObjectSpec[] tableSpecs,
+				final DataColumnSpec... columnSpecs)
 				throws InvalidSettingsException {
 			// Do nothing
 		}
-		
+
 	};
-	
+
 	private final String representation;
-	
-	private PredefinedRoles(String representation) {
+
+	private PredefinedRoles(final String representation) {
 		this.representation = representation;
 	}
-	
+
 	private PredefinedRoles() {
 		this.representation = name();
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.mind_era.knime.roles.Role#getRepresentation()
 	 */
 	@Override

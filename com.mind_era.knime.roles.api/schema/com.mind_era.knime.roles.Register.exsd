@@ -84,7 +84,10 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         &lt;extension point=&quot;com.mind_era.knime.roles.Register&quot;&gt;
+  &lt;!--DummyRole is a class implementing Role.--&gt;
+  &lt;Role class=&quot;com.mind_era.knime.roles.nodes.dummy.DummyRole&quot;/&gt;
+&lt;/extension&gt;
       </documentation>
    </annotation>
 

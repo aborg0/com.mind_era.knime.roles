@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
+<!--
+Copyright © 2013 Mind Eratosthenes Kft.
+Licence: http://www.apache.org/licenses/LICENSE-2.0
+-->
 <schema targetNamespace="com.mind_era.knime.roles" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
