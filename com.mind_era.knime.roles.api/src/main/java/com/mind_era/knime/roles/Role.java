@@ -81,12 +81,14 @@ public interface Role {
 	/**
 	 * @return Is this role has to be unique among the {@link DataTableSpec}
 	 *         columns, or can be multiple columns with the same role?
+	 * @see #isUniquePreferred()
 	 */
 	public boolean isUnique();
 
 	/**
-	 * @return Other roles can also have this role (return value {@code false}),
-	 *         or not (return value {@code true})?
+	 * @return Other roles can also be present for the same column (return value
+	 *         {@code false}), or not (return value {@code true})?
+	 * @see #isExclusivePreferred()
 	 */
 	public boolean isExclusive();
 
@@ -94,6 +96,7 @@ public interface Role {
 	 * @param type
 	 *            The {@link DataType} of the column.
 	 * @return Is it a requirement to have calculated domain for this role?
+	 * @see #isNominalPreferred(DataType)
 	 */
 	public boolean shouldBeNominal(DataType type);
 
@@ -102,18 +105,21 @@ public interface Role {
 	 *            The {@link DataType} of the column.
 	 * @return Should a warning be signaled if the column of this role is not
 	 *         nominal?
+	 * @see #shouldBeNominal(DataType)
 	 */
 	public boolean isNominalPreferred(DataType type);
 
 	/**
 	 * @return Should a warning be signaled if the column of this role is not
 	 *         unique?
+	 * @see #isUnique()
 	 */
 	public boolean isUniquePreferred();
 
 	/**
 	 * @return Should a warning be signaled if the there are multiple roles
 	 *         associated to a column with this role?
+	 * @see #isExclusive()
 	 */
 	public boolean isExclusivePreferred();
 
