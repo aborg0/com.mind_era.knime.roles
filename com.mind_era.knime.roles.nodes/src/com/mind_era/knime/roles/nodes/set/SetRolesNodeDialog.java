@@ -3,11 +3,14 @@
  */
 package com.mind_era.knime.roles.nodes.set;
 
-import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
-import org.knime.core.node.defaultnodesettings.SettingsModelString;
+import java.util.Collections;
 
-import com.mind_era.knime.roles.RoleRegistry;
+import org.knime.core.data.def.StringCell;
+import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.util.Pair;
+
+import com.mind_era.knime.util.DialogComponentPairs;
+import com.mind_era.knime.util.SettingsModelPairs;
 
 /**
  * <code>NodeDialog</code> for the "SetRoles" Node. Allows you to assign roles
@@ -26,9 +29,18 @@ public class SetRolesNodeDialog extends DefaultNodeSettingsPane {
 	 * New pane for configuring the SetRoles node.
 	 */
 	protected SetRolesNodeDialog() {
-		addDialogComponent(new DialogComponentStringSelection(
-				new SettingsModelString(SetRolesNodeModel.CFGKEY_ROLE,
-						SetRolesNodeModel.DEFAULT_ROLE), "role",
-				new RoleRegistry().roleRepresentations().toArray(new String[0])));
+		addDialogComponent(new DialogComponentPairs<StringCell, StringCell>(
+				new SettingsModelPairs<StringCell, StringCell>(
+						SetRolesNodeModel.CFGKEY_ROLE/*
+													 * , SetRolesNodeModel.
+													 * DEFAULT_ROLE
+													 */, StringCell.TYPE,
+						StringCell.TYPE,
+						Collections.<Pair<StringCell, StringCell>> emptyList(),
+						false, false), "column", "role"
+		/*
+		 * ,"role" , new RoleRegistry (). roleRepresentations ( ).toArray(new
+		 * String[0])
+		 */));
 	}
 }

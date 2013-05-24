@@ -28,7 +28,7 @@ public class SetRolesNodeFactory extends NodeFactory<SetRolesNodeModel> {
 	 */
 	@Override
 	public int getNrNodeViews() {
-		return 1;
+		return 0;
 	}
 
 	/**

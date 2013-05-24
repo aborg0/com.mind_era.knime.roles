@@ -120,7 +120,29 @@ public class RoleHandler {
 		}
 		final String rolesAsString = rolesToString(rolesOfSpec);
 		creator.setProperties(spec.getProperties().cloneAndOverwrite(
-				Collections.singletonMap(Role.PROPERTY_KEY, rolesAsString)));
+				rolesOfSpec.isEmpty() ? Collections.<String, String> emptyMap()
+						: Collections.singletonMap(Role.PROPERTY_KEY,
+								rolesAsString)));
+		return creator.createSpec();
+	}
+
+	/**
+	 * Sets roles of a column.
+	 * 
+	 * @param spec
+	 *            A {@link DataColumnSpec}.
+	 * @param roles
+	 *            The {@link Role}s to set.
+	 * @return A new {@link DataColumnSpec} with {@code roles} set.
+	 */
+	public DataColumnSpec setRoles(final DataColumnSpec spec,
+			final Collection<? extends Role> roles) {
+		final DataColumnSpecCreator creator = new DataColumnSpecCreator(spec);
+		final String rolesAsString = rolesToString(roles);
+		creator.setProperties(spec.getProperties().cloneAndOverwrite(
+				roles.isEmpty() ? Collections.<String, String> emptyMap()
+						: Collections.singletonMap(Role.PROPERTY_KEY,
+								rolesAsString)));
 		return creator.createSpec();
 	}
 
@@ -145,9 +167,9 @@ public class RoleHandler {
 	 *            Some {@link Role}s.
 	 * @return {@link String} version of {@code roles}.
 	 */
-	public String rolesToString(final Iterable<Role> roles) {
+	public String rolesToString(final Iterable<? extends Role> roles) {
 		final StringBuilder ret = new StringBuilder();
-		for (final Iterator<Role> iterator = roles.iterator(); iterator
+		for (final Iterator<? extends Role> iterator = roles.iterator(); iterator
 				.hasNext();) {
 			final Role role = iterator.next();
 			ret.append(role.representation());
