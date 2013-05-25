@@ -58,16 +58,26 @@ public class SetRolesNodeModel extends NodeModel {
 	@Override
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
 			final ExecutionContext exec) throws Exception {
+		final DataTableSpec tableSpec = inData[0].getDataTableSpec();
+		final DataTableSpec newSpec = setRoles(tableSpec);
+		return new BufferedDataTable[] { exec.createSpecReplacerTable(
+				inData[0], newSpec) };
+	}
+
+	/**
+	 * @param tableSpec
+	 * @return
+	 */
+	protected DataTableSpec setRoles(final DataTableSpec tableSpec) {
 		final Collection<Pair<StringCell, StringCell>> pairs = role
 				.getEnabledPairs();
 		final Map<String, Collection<Role>> colNamesToRoles = colNamesToRoles(pairs);
 		final RoleHandler roleHandler = new RoleHandler(new RoleRegistry());
 
-		final DataColumnSpec[] newColSpecs = new DataColumnSpec[inData[0]
-				.getDataTableSpec().getNumColumns()];
+		final DataColumnSpec[] newColSpecs = new DataColumnSpec[tableSpec
+				.getNumColumns()];
 		for (int i = newColSpecs.length; i-- > 0;) {
-			final DataColumnSpec origSpec = inData[0].getDataTableSpec()
-					.getColumnSpec(i);
+			final DataColumnSpec origSpec = tableSpec.getColumnSpec(i);
 			final String name = origSpec.getName();
 			final Collection<? extends Role> roles = colNamesToRoles
 					.containsKey(name) ? colNamesToRoles.get(name)
@@ -75,8 +85,7 @@ public class SetRolesNodeModel extends NodeModel {
 			newColSpecs[i] = roleHandler.setRoles(origSpec, roles);
 		}
 		final DataTableSpec newSpec = new DataTableSpec(newColSpecs);
-		return new BufferedDataTable[] { exec.createSpecReplacerTable(
-				inData[0], newSpec) };
+		return newSpec;
 	}
 
 	/**
@@ -111,11 +120,8 @@ public class SetRolesNodeModel extends NodeModel {
 	@Override
 	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
 			throws InvalidSettingsException {
-		final Collection<Pair<StringCell, StringCell>> enabledPairs = role
-				.getEnabledPairs();
-		System.out.println(enabledPairs);
-		// TODO: generated method stub
-		return new DataTableSpec[] { null };
+		return inSpecs == null || inSpecs[0] == null ? null
+				: new DataTableSpec[] { setRoles(inSpecs[0]) };
 	}
 
 	/**

@@ -3,13 +3,17 @@
  */
 package com.mind_era.knime.roles.nodes.set;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
+import org.knime.core.node.port.PortObjectSpec;
 import org.knime.core.util.Pair;
 
+import com.mind_era.knime.roles.RoleRegistry;
 import com.mind_era.knime.util.DialogComponentPairs;
 import com.mind_era.knime.util.DialogComponentPairs.Columns;
 import com.mind_era.knime.util.SettingsModelPairs;
@@ -43,6 +47,54 @@ public class SetRolesNodeDialog extends DefaultNodeSettingsPane {
 				/*
 				 * ,"role" , new RoleRegistry (). roleRepresentations (
 				 * ).toArray(new String[0])
-				 */, EnumSet.of(Columns.Add, Columns.Remove, Columns.Enable)));
+				 */, EnumSet.of(Columns.Add, Columns.Remove, Columns.Enable)) {
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.mind_era.knime.util.DialogComponentPairs#isEnumerable(org
+			 * .knime.core.node.port.PortObjectSpec[], boolean)
+			 */
+			@Override
+			protected boolean isEnumerable(final PortObjectSpec[] specs,
+					final boolean leftColumn) {
+				return leftColumn ? specs != null && specs.length > 0
+						&& specs[0] != null : true;
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.mind_era.knime.util.DialogComponentPairs#rightPossibleValues
+			 * (org.knime.core.node.port.PortObjectSpec[])
+			 */
+			@Override
+			protected Collection<StringCell> rightPossibleValues(
+					final PortObjectSpec[] specs) {
+				final RoleRegistry registry = new RoleRegistry();
+				final Collection<? extends String> roleRepresentations = registry
+						.roleRepresentations();
+				final Collection<StringCell> ret = new ArrayList<StringCell>(
+						roleRepresentations.size());
+				for (final String r : roleRepresentations) {
+					ret.add(new StringCell(r));
+				}
+				return ret;
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * com.mind_era.knime.util.DialogComponentPairs#leftPossibleValues
+			 * (org.knime.core.node.port.PortObjectSpec[])
+			 */
+			@Override
+			protected Collection<StringCell> leftPossibleValues(
+					final PortObjectSpec[] specs) {
+				return columnsFromSpec(specs, 0);
+			}
+		});
 	}
 }

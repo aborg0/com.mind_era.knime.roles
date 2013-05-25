@@ -40,6 +40,7 @@ import javax.swing.table.TableColumnModel;
 public class ButtonColumn extends AbstractCellEditor implements
 		TableCellRenderer, TableCellEditor, ActionListener, MouseListener {
 	private static final long serialVersionUID = -1042012291287236590L;
+	private static final JPanel emptyPanel = new JPanel();
 
 	private JTable table;
 	private Action action;
@@ -183,7 +184,7 @@ public class ButtonColumn extends AbstractCellEditor implements
 			final Object value, final boolean isSelected, final int row,
 			final int column) {
 		if (value == null) {
-			return new JPanel();
+			return null;
 		}
 		editButton.getModel().setSelected(false);
 		/*
@@ -218,7 +219,7 @@ public class ButtonColumn extends AbstractCellEditor implements
 			final Object value, final boolean isSelected,
 			final boolean hasFocus, final int row, final int column) {
 		if (value == null) {
-			return new JPanel();
+			return emptyPanel;
 		}
 		if (isSelected) {
 			renderButton.setForeground(table.getSelectionForeground());
