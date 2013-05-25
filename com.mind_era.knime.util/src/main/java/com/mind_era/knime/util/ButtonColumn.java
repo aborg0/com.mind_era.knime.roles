@@ -12,6 +12,8 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
@@ -81,6 +83,56 @@ public class ButtonColumn extends AbstractCellEditor implements
 	}
 
 	/**
+	 * Creates {@link ButtonColumn} with regular {@link JButton}s in the column.
+	 * 
+	 * @param table
+	 *            the table containing the button renderer/editor
+	 * @param action
+	 *            the Action to be invoked when the button is invoked
+	 * @param column
+	 *            the column to which the button renderer/editor is added
+	 * @return A {@link ButtonColumn} instance, which handles the clicks and
+	 *         other actions. Only interesting if you want to set a
+	 *         {@link #setMnemonic(int) mnemonic}.
+	 * @see ButtonColumn#ButtonColumn(JTable, Action, int)
+	 */
+	public static ButtonColumn install(final JTable table, final Action action,
+			final int column) {
+		return new ButtonColumn(table, action, column);
+	}
+
+	/**
+	 * Creates {@link ButtonColumn} with {@link JCheckBox}es in the column.
+	 * 
+	 * @param table
+	 *            the table containing the button renderer/editor
+	 * @param action
+	 *            the Action to be invoked when the button is invoked
+	 * @param column
+	 *            the column to which the button renderer/editor is added
+	 * @return A {@link ButtonColumn} instance, which handles the clicks and
+	 *         other actions. Only interesting if you want to set a
+	 *         {@link #setMnemonic(int) mnemonic}.
+	 * @see ButtonColumn#ButtonColumn(JTable, Action, int)
+	 */
+	public static ButtonColumn installCheckBox(final JTable table,
+			final Action action, final int column) {
+		return new ButtonColumn(table, action, column) {
+			private static final long serialVersionUID = -832294849948284837L;
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see com.mind_era.knime.util.ButtonColumn#createButton()
+			 */
+			@Override
+			protected AbstractButton createButton() {
+				return new JCheckBox();
+			}
+		};
+	}
+
+	/**
 	 * @return A new {@link AbstractButton}.
 	 */
 	protected AbstractButton createButton() {
@@ -130,11 +182,14 @@ public class ButtonColumn extends AbstractCellEditor implements
 	public Component getTableCellEditorComponent(final JTable table,
 			final Object value, final boolean isSelected, final int row,
 			final int column) {
-		editButton.getModel().setSelected(false);
 		if (value == null) {
-			editButton.setText("");
-			editButton.setIcon(null);
-		} else if (value instanceof Boolean) {
+			return new JPanel();
+		}
+		editButton.getModel().setSelected(false);
+		/*
+		 * if (value == null) { editButton.setText("");
+		 * editButton.setIcon(null); } else
+		 */if (value instanceof Boolean) {
 			editButton.setText("");
 			editButton.setIcon(null);
 			editButton.getModel().setSelected(((Boolean) value).booleanValue());
@@ -162,6 +217,9 @@ public class ButtonColumn extends AbstractCellEditor implements
 	public Component getTableCellRendererComponent(final JTable table,
 			final Object value, final boolean isSelected,
 			final boolean hasFocus, final int row, final int column) {
+		if (value == null) {
+			return new JPanel();
+		}
 		if (isSelected) {
 			renderButton.setForeground(table.getSelectionForeground());
 			renderButton.setBackground(table.getSelectionBackground());
@@ -178,10 +236,10 @@ public class ButtonColumn extends AbstractCellEditor implements
 
 		// renderButton.setText( (value == null) ? "" : value.toString() );
 		renderButton.getModel().setSelected(false);
-		if (value == null) {
-			renderButton.setText("");
-			renderButton.setIcon(null);
-		} else if (value instanceof Boolean) {
+		/*
+		 * if (value == null) { renderButton.setText("");
+		 * renderButton.setIcon(null); } else
+		 */if (value instanceof Boolean) {
 			renderButton.setText("");
 			renderButton.setIcon(null);
 			renderButton.getModel().setSelected(

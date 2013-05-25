@@ -4,12 +4,14 @@
 package com.mind_era.knime.roles.nodes.set;
 
 import java.util.Collections;
+import java.util.EnumSet;
 
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.util.Pair;
 
 import com.mind_era.knime.util.DialogComponentPairs;
+import com.mind_era.knime.util.DialogComponentPairs.Columns;
 import com.mind_era.knime.util.SettingsModelPairs;
 
 /**
@@ -38,9 +40,9 @@ public class SetRolesNodeDialog extends DefaultNodeSettingsPane {
 						StringCell.TYPE,
 						Collections.<Pair<StringCell, StringCell>> emptyList(),
 						false, false), "column", "role"
-		/*
-		 * ,"role" , new RoleRegistry (). roleRepresentations ( ).toArray(new
-		 * String[0])
-		 */));
+				/*
+				 * ,"role" , new RoleRegistry (). roleRepresentations (
+				 * ).toArray(new String[0])
+				 */, EnumSet.of(Columns.Add, Columns.Remove, Columns.Enable)));
 	}
 }

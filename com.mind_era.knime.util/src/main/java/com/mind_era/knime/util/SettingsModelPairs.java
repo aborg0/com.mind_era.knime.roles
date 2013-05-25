@@ -17,6 +17,7 @@ import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.NotConfigurableException;
+import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.SettingsModel;
 import org.knime.core.node.port.PortObjectSpec;
 import org.knime.core.util.Pair;
@@ -47,11 +48,17 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 
 	/**
 	 * @param configKey
+	 *            The configuration key for the pairs.
 	 * @param leftType
+	 *            The DataType of left values.
 	 * @param rightType
+	 *            The {@link DataType} of right values.
 	 * @param defaultValues
+	 *            The default values of the model.
 	 * @param isLeftUnique
+	 *            Are the left values unique among the enabled rows?
 	 * @param isRightUnique
+	 *            Are the right values unique among the enabled rows?
 	 */
 	public SettingsModelPairs(final String configKey, final DataType leftType,
 			final DataType rightType,
@@ -177,7 +184,7 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 	}
 
 	/**
-	 * @return
+	 * @return The left default values.
 	 */
 	private DataCell[] getLeftDefaults() {
 		final DataCell[] ret = new DataCell[defaultValues.size()];
@@ -188,7 +195,7 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 	}
 
 	/**
-	 * @return
+	 * @return The right default values.
 	 */
 	private DataCell[] getRightDefaults() {
 		final DataCell[] ret = new DataCell[defaultValues.size()];
@@ -255,8 +262,13 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 	}
 
 	/**
+	 * Converts a {@link BitSet} to a {@code boolean} array.
+	 * 
 	 * @param bitset
-	 * @return
+	 *            A {@link BitSet}.
+	 * @return The {@code boolean} array, where the true values represent the
+	 *         numbers present in the {@code bitset}. (Only non-negative
+	 *         indices.)
 	 */
 	private static boolean[] toBooleanArray(final BitSet bitset) {
 		final boolean[] ret = new boolean[bitset.length()];
@@ -266,6 +278,10 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 		return ret;
 	}
 
+	/**
+	 * @return The {@link Pair}s that belong to enabled rows.
+	 * @see #getEnabledRows()
+	 */
 	public Collection<Pair<Left, Right>> getEnabledPairs() {
 		final Collection<Pair<Left, Right>> ret = new ArrayList<>();
 		int i = 0;
@@ -278,27 +294,50 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 	}
 
 	/**
-	 * @return the values
+	 * @return The values.
 	 */
 	protected List<Pair<Left, Right>> getValues() {
 		return values;
 	}
 
 	/**
-	 * @return the enabledRows
+	 * @return The enabled rows.
 	 */
 	protected BitSet getEnabledRows() {
 		return enabledRows;
 	}
 
+	/**
+	 * @param enabledRows
+	 *            The new enabled rows.
+	 */
 	protected void setEnabledRows(final BitSet enabledRows) {
 		this.enabledRows.clear();
 		this.enabledRows.or(enabledRows);
 	}
 
+	/**
+	 * @param vs
+	 *            The values that should be visible on the
+	 *            {@link DialogComponent}.
+	 */
 	protected void setValues(final Collection<Pair<Left, Right>> vs) {
 		values.clear();
 		values.addAll(vs);
+	}
+
+	/**
+	 * @return the leftType
+	 */
+	public DataType getLeftType() {
+		return leftType;
+	}
+
+	/**
+	 * @return the rightType
+	 */
+	public DataType getRightType() {
+		return rightType;
 	}
 
 	/*

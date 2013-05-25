@@ -133,7 +133,10 @@ public class SetRolesNodeModel extends NodeModel {
 	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
 			throws InvalidSettingsException {
 		role.loadSettingsFrom(settings);
-		System.out.println(role.getEnabledPairs());
+		for (final Pair<StringCell, StringCell> pair : role.getEnabledPairs()) {
+			System.out.println(pair.getFirst().getStringValue() + " - "
+					+ pair.getSecond().getStringValue());
+		}
 	}
 
 	/**
