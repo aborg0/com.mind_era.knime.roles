@@ -17,5 +17,5 @@ Currently only the [API project](com.mind_era.knime.roles.api) is available, alt
 There is a [utility project](com.mind_era.knime.util) for the KNIME related reusable parts.
 
 ## Legal stuff
-The API is published under the Apache 2.0 licence: http://www.apache.org/licenses/LICENSE-2.0
+The API is published under the [Apache 2.0 licence](http://www.apache.org/licenses/LICENSE-2.0), while the nodes and utils are under [AGPL](http://www.gnu.org/licenses/agpl-3.0.html).
 Feel free to contribute.
