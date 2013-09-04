@@ -420,6 +420,18 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 		// .getImage(ISharedImages.IMG_OBJ_ADD);
 
 	}
+	
+	/**
+	 * Sets the preferred size of the inner scrollpane and the component.
+	 * 
+	 * @param width The new width.
+	 * @param height The new height.
+	 */
+	public void setPreferredSize(int width, int height) {
+		Dimension dim = new Dimension(width, height);
+		getComponentPanel().setPreferredSize(dim);
+		getComponentPanel().getComponent(0).setPreferredSize(dim);
+	}
 
 	/**
 	 * @param renderer
