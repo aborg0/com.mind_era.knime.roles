@@ -264,7 +264,7 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 			final EnumSet<Columns> visibleColumns) {
 		super(model);
 		this.visibleColumns = visibleColumns.clone();
-		final JPanel controls = new JPanel();
+//		final JPanel controls = new JPanel();
 		final JTable table = new JTable();
 		// table.setAutoCreateColumnsFromModel(false);
 		table.getTableHeader().setReorderingAllowed(false);
@@ -273,7 +273,7 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 				"Del", "Up", "Down", "\u2713" });
 		tableModel.setNumRows(1);
 		tableModel.setColumnCount(colCount);
-		controls.add(new JScrollPane(table));
+//		controls.add(new JScrollPane(table));
 		final TableColumnModel colModel = table.getColumnModel();
 		final DataValueRendererFamily leftRenderer = model.getLeftType()
 				.getRenderer(null);
@@ -338,10 +338,10 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 		for (int i = RIGHT_COL + 1; i < colCount; ++i) {
 			colModel.getColumn(i).setModelIndex(i);
 		}
-		controls.setName("controls");
-		final javax.swing.JScrollPane pane = new javax.swing.JScrollPane(
-				controls);
-		pane.setPreferredSize(new java.awt.Dimension(500, 300));
+//		controls.setName("controls");
+//		final javax.swing.JScrollPane pane = new javax.swing.JScrollPane(
+//				controls);
+//		pane.setPreferredSize(new java.awt.Dimension(500, 300));
 		final javax.swing.Action addAction = new javax.swing.AbstractAction("+") {
 			private static final long serialVersionUID = -6930940431718125770L;
 
@@ -412,9 +412,9 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 				}
 			}
 		}, DOWN_COL);
-		controls.setPreferredSize(new Dimension(500, 300));
+//		controls.setPreferredSize(new Dimension(500, 300));
 		// TODO add button to remove unused (not enabled) pairs
-		getComponentPanel().add(pane);
+		getComponentPanel().add(/*controls*/new JScrollPane(table));
 		// http://blog.eclipse-tips.com/2008/02/eclipse-icons.html
 		// final Image addIcon = PlatformUI.getWorkbench().getSharedImages()
 		// .getImage(ISharedImages.IMG_OBJ_ADD);
@@ -427,10 +427,15 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 	 * @param width The new width.
 	 * @param height The new height.
 	 */
-	public void setPreferredSize(int width, int height) {
-		Dimension dim = new Dimension(width, height);
+	public void setPreferredSize(final int width, final int height) {
+		final Dimension dim = new Dimension(width, height);
 		getComponentPanel().setPreferredSize(dim);
-		getComponentPanel().getComponent(0).setPreferredSize(dim);
+		final Component component = getComponentPanel().getComponent(0);
+		if (component instanceof JScrollPane) {
+			final JScrollPane pane = (JScrollPane) component;
+			pane.setPreferredSize(dim);
+			pane.getViewport().setPreferredSize(dim);
+		}
 	}
 
 	/**
