@@ -61,6 +61,8 @@ public class RoleRegistry {
 				if (representations_.containsKey(rep)) {
 					logger.warn("Multiple roles registered with same representations: "
 							+ representations_.get(rep) + " and " + role);
+				} else {
+					representations_.put(rep, role);
 				}
 				registered.add(role);
 			} catch (final CoreException e) {
