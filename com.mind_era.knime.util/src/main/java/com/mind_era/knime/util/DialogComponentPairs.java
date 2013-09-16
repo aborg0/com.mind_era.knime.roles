@@ -731,6 +731,9 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 	 */
 	protected Collection<StringCell> columnsFromSpec(
 			final PortObjectSpec[] specs, final int index) {
+		if (specs == null || specs[index] == null) {
+			return Collections.emptyList();
+		}
 		final DataTableSpec spec = (DataTableSpec) specs[index];
 		final Collection<StringCell> ret = new ArrayList<>(spec.getNumColumns());
 		for (final DataColumnSpec colSpec : spec) {
