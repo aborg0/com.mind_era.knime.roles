@@ -39,9 +39,17 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * 
+ */
 @SuppressWarnings("all")
 public class Snippet156 {
 
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 */
 	public static BufferedImage convertToAWT(final ImageData data) {
 		ColorModel colorModel = null;
 		final PaletteData palette = data.palette;
@@ -166,6 +174,10 @@ public class Snippet156 {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(final String[] args) {
 		final Display display = new Display();
 		final Shell shell = new Shell(display);
