@@ -407,7 +407,7 @@ public class RoleCheck {
 				.roles(spec);
 		final CheckResult preCheck = check(spec);
 		final List<Violation> newErrors = new ArrayList<>(preCheck.getErrors());
-		final Set<Role> seenRoles = new HashSet<Role>();
+		final Set<Role> seenRoles = new HashSet<>();
 		for (final Collection<? extends Role> rs : roles.values()) {
 			for (final Role role : rs) {
 				seenRoles.add(role);

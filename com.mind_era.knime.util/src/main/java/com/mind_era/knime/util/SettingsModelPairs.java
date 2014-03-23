@@ -16,7 +16,6 @@ import org.knime.core.data.DataType;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
-import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.SettingsModel;
 import org.knime.core.node.port.PortObjectSpec;
@@ -120,7 +119,7 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 	 */
 	@Override
 	protected void loadSettingsForDialog(final NodeSettingsRO settings,
-			final PortObjectSpec[] specs) throws NotConfigurableException {
+			final PortObjectSpec[] specs) {
 		try {
 			loadSettingsForModel(settings);
 		} catch (final InvalidSettingsException e) {
@@ -136,8 +135,7 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 	 * (org.knime.core.node.NodeSettingsWO)
 	 */
 	@Override
-	protected void saveSettingsForDialog(final NodeSettingsWO settings)
-			throws InvalidSettingsException {
+	protected void saveSettingsForDialog(final NodeSettingsWO settings) {
 		saveSettingsForModel(settings);
 	}
 
@@ -232,7 +230,7 @@ public class SettingsModelPairs<Left extends DataCell, Right extends DataCell>
 		}
 		for (int i = 0; i < leftValues.length; ++i) {
 			@SuppressWarnings("unchecked")
-			final Pair<Left, Right> newPair = (Pair<Left, Right>) new Pair<DataCell, DataCell>(
+			final Pair<Left, Right> newPair = (Pair<Left, Right>) new Pair<>(
 					leftValues[i], rightValues[i]);
 			values.add(newPair);
 		}

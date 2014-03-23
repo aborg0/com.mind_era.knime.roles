@@ -36,7 +36,7 @@ public class SetRolesNodeDialog extends DefaultNodeSettingsPane {
 	 */
 	protected SetRolesNodeDialog() {
 		addDialogComponent(new DialogComponentPairs<StringCell, StringCell>(
-				new SettingsModelPairs<StringCell, StringCell>(
+				new SettingsModelPairs<>(
 						SetRolesNodeModel.CFGKEY_ROLE/*
 													 * , SetRolesNodeModel.
 													 * DEFAULT_ROLE
@@ -75,7 +75,7 @@ public class SetRolesNodeDialog extends DefaultNodeSettingsPane {
 				final RoleRegistry registry = new RoleRegistry();
 				final Collection<? extends String> roleRepresentations = registry
 						.roleRepresentations();
-				final Collection<StringCell> ret = new ArrayList<StringCell>(
+				final Collection<StringCell> ret = new ArrayList<>(
 						roleRepresentations.size());
 				for (final String r : roleRepresentations) {
 					ret.add(new StringCell(r));

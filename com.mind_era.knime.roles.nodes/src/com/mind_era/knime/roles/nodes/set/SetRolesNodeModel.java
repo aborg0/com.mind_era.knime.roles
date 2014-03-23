@@ -4,7 +4,6 @@
 package com.mind_era.knime.roles.nodes.set;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +14,6 @@ import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataTable;
-import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
 import org.knime.core.node.InvalidSettingsException;
@@ -57,7 +55,7 @@ public class SetRolesNodeModel extends NodeModel {
 	 */
 	@Override
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+			final ExecutionContext exec) {
 		final DataTableSpec tableSpec = inData[0].getDataTableSpec();
 		final DataTableSpec newSpec = setRoles(tableSpec);
 		return new BufferedDataTable[] { exec.createSpecReplacerTable(
@@ -65,8 +63,8 @@ public class SetRolesNodeModel extends NodeModel {
 	}
 
 	/**
-	 * @param tableSpec
-	 * @return
+	 * @param tableSpec Input {@link DataTableSpec}.
+	 * @return The {@link DataTableSpec} with the roles added.
 	 */
 	protected DataTableSpec setRoles(final DataTableSpec tableSpec) {
 		final Collection<Pair<StringCell, StringCell>> pairs = role
@@ -89,8 +87,8 @@ public class SetRolesNodeModel extends NodeModel {
 	}
 
 	/**
-	 * @param pairs
-	 * @return
+	 * @param pairs Some {@link Pair}s.
+	 * @return A (multi-){@link Map} which contains the keys from the pairs' first value and the values as {@link Role}s from the second values.
 	 */
 	private Map<String, Collection<Role>> colNamesToRoles(
 			final Collection<Pair<StringCell, StringCell>> pairs) {
@@ -111,15 +109,14 @@ public class SetRolesNodeModel extends NodeModel {
 	 */
 	@Override
 	protected void reset() {
-		// TODO: generated method stub
+		//No internal state, nothing to reset
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) {
 		return inSpecs == null || inSpecs[0] == null ? null
 				: new DataTableSpec[] { setRoles(inSpecs[0]) };
 	}
@@ -159,9 +156,8 @@ public class SetRolesNodeModel extends NodeModel {
 	 */
 	@Override
 	protected void loadInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-		// TODO: generated method stub
+			final ExecutionMonitor exec) {
+		//No internal state
 	}
 
 	/**
@@ -169,9 +165,8 @@ public class SetRolesNodeModel extends NodeModel {
 	 */
 	@Override
 	protected void saveInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
-		// TODO: generated method stub
+			final ExecutionMonitor exec) {
+		//No internal state
 	}
 
 }

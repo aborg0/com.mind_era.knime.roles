@@ -12,7 +12,6 @@ import javax.swing.Icon;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataType;
 import org.knime.core.data.def.StringCell;
-import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.port.PortObjectSpec;
 
@@ -93,8 +92,7 @@ public enum PredefinedRoles implements Role {
 		@Override
 		public void configurationChecks(final NodeModel model,
 				final PortObjectSpec[] tableSpecs,
-				final DataColumnSpec... columnSpecs)
-				throws InvalidSettingsException {
+				final DataColumnSpec... columnSpecs) {
 			// Do nothing
 		}
 
@@ -169,8 +167,7 @@ public enum PredefinedRoles implements Role {
 		@Override
 		public void configurationChecks(final NodeModel model,
 				final PortObjectSpec[] tableSpecs,
-				final DataColumnSpec... columnSpecs)
-				throws InvalidSettingsException {
+				final DataColumnSpec... columnSpecs) {
 			// Do nothing
 		}
 
@@ -245,8 +242,7 @@ public enum PredefinedRoles implements Role {
 		@Override
 		public void configurationChecks(final NodeModel model,
 				final PortObjectSpec[] tableSpecs,
-				final DataColumnSpec... columnSpecs)
-				throws InvalidSettingsException {
+				final DataColumnSpec... columnSpecs) {
 			// Do nothing
 		}
 

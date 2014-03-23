@@ -40,8 +40,6 @@ import org.knime.core.data.DataTableSpec;
 import org.knime.core.data.IntValue;
 import org.knime.core.data.def.StringCell;
 import org.knime.core.data.renderer.DataValueRendererFamily;
-import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
 import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.port.PortObjectSpec;
@@ -269,7 +267,7 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 		// table.setAutoCreateColumnsFromModel(false);
 		table.getTableHeader().setReorderingAllowed(false);
 		tableModel = (javax.swing.table.DefaultTableModel) table.getModel();
-		tableModel.setColumnIdentifiers(new Object[] { "left", "right", "Add",
+		tableModel.setColumnIdentifiers(new Object[] { leftHeader, rightHeader, "Add",
 				"Del", "Up", "Down", "\u2713" });
 		tableModel.setNumRows(1);
 		tableModel.setColumnCount(colCount);
@@ -365,6 +363,7 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 				final int row = Integer.parseInt(event.getActionCommand());
 				final Object value = tableModel.getValueAt(row, column);
 				if (value instanceof Boolean) {
+					@SuppressWarnings("hiding")
 					final Boolean enabled = (Boolean) value;
 					tableModel.setValueAt(
 							Boolean.valueOf(!enabled.booleanValue()), row,
@@ -518,7 +517,7 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 	 * validateSettingsBeforeSave()
 	 */
 	@Override
-	protected void validateSettingsBeforeSave() throws InvalidSettingsException {
+	protected void validateSettingsBeforeSave() {
 		updateModel();
 	}
 
@@ -571,8 +570,7 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 	 * checkConfigurabilityBeforeLoad(org.knime.core.node.port.PortObjectSpec[])
 	 */
 	@Override
-	protected void checkConfigurabilityBeforeLoad(final PortObjectSpec[] specs)
-			throws NotConfigurableException {
+	protected void checkConfigurabilityBeforeLoad(final PortObjectSpec[] specs) {
 		hasLeftPossibleValues = isEnumerable(specs, true);
 		hasRightPossibleValues = isEnumerable(specs, false);
 		hasLeftSuggestions = hasSuggestions(specs, true);
@@ -654,8 +652,8 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 	 *         {@link #rightPossibleValues(PortObjectSpec[])} according to
 	 *         {@code leftColumn}.
 	 */
-	protected boolean isEnumerable(final PortObjectSpec[] specs,
-			final boolean leftColumn) {
+	protected boolean isEnumerable(@SuppressWarnings("unused") final PortObjectSpec[] specs,
+			@SuppressWarnings("unused") final boolean leftColumn) {
 		return false;
 	}
 
@@ -672,46 +670,54 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 	 *         {@link #rightSuggestions(PortObjectSpec[])} according to
 	 *         {@code leftColumn}.
 	 */
-	protected boolean hasSuggestions(final PortObjectSpec[] specs,
-			final boolean leftColumn) {
+	protected boolean hasSuggestions(@SuppressWarnings("unused") final PortObjectSpec[] specs,
+			@SuppressWarnings("unused") final boolean leftColumn) {
 		return false;
 	}
 
 	/**
+	 * Intended to be overridden, default implementation is empty list.
+	 * 
 	 * @param specs
 	 *            The {@link PortObjectSpec}s.
 	 * @return The possible values for the left column, although this is not
 	 *         necessarily exhaustive.
 	 */
-	protected Collection<Left> leftSuggestions(final PortObjectSpec[] specs) {
+	protected Collection<Left> leftSuggestions(@SuppressWarnings("unused") final PortObjectSpec[] specs) {
 		return Collections.emptyList();
 	}
 
 	/**
+	 * Intended to be overridden, default implementation is empty list.
+	 * 
 	 * @param specs
 	 *            The {@link PortObjectSpec}s.
 	 * @return The possible values for the right column, although this is not
 	 *         necessarily exhaustive.
 	 */
-	protected Collection<Right> rightSuggestions(final PortObjectSpec[] specs) {
+	protected Collection<Right> rightSuggestions(@SuppressWarnings("unused") final PortObjectSpec[] specs) {
 		return Collections.emptyList();
 	}
 
 	/**
+	 * Intended to be overridden, default implementation is empty list.
+	 * 
 	 * @param specs
 	 *            The {@link PortObjectSpec}s.
 	 * @return All of the possible values for the left column.
 	 */
-	protected Collection<Left> leftPossibleValues(final PortObjectSpec[] specs) {
+	protected Collection<Left> leftPossibleValues(@SuppressWarnings("unused") final PortObjectSpec[] specs) {
 		return Collections.emptyList();
 	}
 
 	/**
+	 * Intended to be overridden, default implementation is empty list.
+	 * 
 	 * @param specs
 	 *            The {@link PortObjectSpec}s.
 	 * @return All of the possible values for the right column.
 	 */
-	protected Collection<Right> rightPossibleValues(final PortObjectSpec[] specs) {
+	protected Collection<Right> rightPossibleValues(@SuppressWarnings("unused") final PortObjectSpec[] specs) {
 		return Collections.emptyList();
 	}
 
@@ -748,7 +754,7 @@ public class DialogComponentPairs<Left extends DataCell, Right extends DataCell>
 	 */
 	protected Collection<StringCell> flowVariableNames() {
 		final Map<String, FlowVariable> map = getAvailableFlowVariable();
-		final Collection<StringCell> ret = new ArrayList<StringCell>(map.size());
+		final Collection<StringCell> ret = new ArrayList<>(map.size());
 		for (final String key : map.keySet()) {
 			ret.add(new StringCell(key));
 		}

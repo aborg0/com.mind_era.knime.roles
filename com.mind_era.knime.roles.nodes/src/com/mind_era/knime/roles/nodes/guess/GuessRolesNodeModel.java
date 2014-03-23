@@ -4,16 +4,13 @@
 package com.mind_era.knime.roles.nodes.guess;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.BufferedDataTable;
-import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
-import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeModel;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -42,7 +39,7 @@ public class GuessRolesNodeModel extends NodeModel {
 	 */
 	@Override
 	protected BufferedDataTable[] execute(final BufferedDataTable[] inData,
-			final ExecutionContext exec) throws Exception {
+			final ExecutionContext exec) {
 
 		return new BufferedDataTable[] { exec.createSpecReplacerTable(
 				inData[0], guessSpec(inData[0].getDataTableSpec())) };
@@ -60,14 +57,13 @@ public class GuessRolesNodeModel extends NodeModel {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs)
-			throws InvalidSettingsException {
+	protected DataTableSpec[] configure(final DataTableSpec[] inSpecs) {
 		return new DataTableSpec[] { guessSpec(inSpecs[0]) };
 	}
 
 	/**
-	 * @param dataTableSpec
-	 * @return
+	 * @param dataTableSpec Input {@link DataTableSpec}.
+	 * @return The guessed {@link DataTableSpec}.
 	 */
 	private DataTableSpec guessSpec(final DataTableSpec dataTableSpec) {
 		final RoleRegistry registry = new RoleRegistry();
@@ -98,8 +94,7 @@ public class GuessRolesNodeModel extends NodeModel {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
+	protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) {
 		// no settings
 	}
 
@@ -107,8 +102,7 @@ public class GuessRolesNodeModel extends NodeModel {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void validateSettings(final NodeSettingsRO settings)
-			throws InvalidSettingsException {
+	protected void validateSettings(final NodeSettingsRO settings) {
 		// no settings
 	}
 
@@ -117,8 +111,7 @@ public class GuessRolesNodeModel extends NodeModel {
 	 */
 	@Override
 	protected void loadInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
+			final ExecutionMonitor exec) {
 		// Nothing to do
 	}
 
@@ -127,8 +120,7 @@ public class GuessRolesNodeModel extends NodeModel {
 	 */
 	@Override
 	protected void saveInternals(final File internDir,
-			final ExecutionMonitor exec) throws IOException,
-			CanceledExecutionException {
+			final ExecutionMonitor exec) {
 		// nothing to do
 	}
 

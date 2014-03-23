@@ -180,7 +180,7 @@ public class ButtonColumn extends AbstractCellEditor implements
 	}
 
 	@Override
-	public Component getTableCellEditorComponent(final JTable table,
+	public Component getTableCellEditorComponent(final JTable _unused,
 			final Object value, final boolean isSelected, final int row,
 			final int column) {
 		if (value == null) {
@@ -215,7 +215,7 @@ public class ButtonColumn extends AbstractCellEditor implements
 	// Implement TableCellRenderer interface
 	//
 	@Override
-	public Component getTableCellRendererComponent(final JTable table,
+	public Component getTableCellRendererComponent(final JTable _unused,
 			final Object value, final boolean isSelected,
 			final boolean hasFocus, final int row, final int column) {
 		if (value == null) {

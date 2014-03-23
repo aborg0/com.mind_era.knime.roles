@@ -138,6 +138,7 @@ public interface Role {
 	 * @throws InvalidSettingsException
 	 *             If the configuration is not compatible with the role.
 	 */
+	@SuppressWarnings("javadoc")
 	public void configurationChecks(NodeModel model,
 			PortObjectSpec[] tableSpecs, DataColumnSpec... columnSpecs)
 			throws InvalidSettingsException;

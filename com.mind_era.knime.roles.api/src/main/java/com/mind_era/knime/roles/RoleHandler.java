@@ -89,7 +89,7 @@ public class RoleHandler {
 	 * @see RoleRegistry#role(String)
 	 */
 	private List<? extends Role> map(final String... list) {
-		final List<Role> ret = new ArrayList<Role>(list.length);
+		final List<Role> ret = new ArrayList<>(list.length);
 		for (final String string : list) {
 			ret.add(registry.role(string));
 		}
