@@ -1,5 +1,8 @@
 # Welcome to the *KNIME Roles* project
 
+## Note
+We are moving to the KNIME community contributions, so the latest source might be found in https://community.knime.org/svn/nodes4knime/trunk/com.mind_era soon.
+
 ## Purpose
 We would like to offer a framework for easier work with custom properties to handle the KNIME roles.
 
